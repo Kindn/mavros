@@ -120,6 +120,7 @@ ament_target_dependencies(mavros
 target_link_libraries(mavros ${GeographicLib_LIBRARIES})
 rclcpp_components_register_nodes(mavros "mavros::router::Router" "mavros::uas::UAS")
 
+add_library(sjson SHARED src/simple_json/json.cpp)
 add_library(mavros_plugins SHARED
   # [[[cog:
   # mavros_cog.outl_glob_files('src/plugins')
@@ -157,6 +158,7 @@ add_dependencies(mavros_plugins
 )
 target_link_libraries(mavros_plugins
   mavros
+  sjson
 )
 ament_target_dependencies(mavros_plugins
   angles
@@ -191,7 +193,7 @@ install(PROGRAMS scripts/mav
   DESTINATION lib/${PROJECT_NAME}
 )
 
-install(TARGETS mavros mavros_node mavros_plugins
+install(TARGETS mavros mavros_node mavros_plugins sjson
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
@@ -207,6 +209,10 @@ install(DIRECTORY include/
 )
 
 install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(DIRECTORY config
   DESTINATION share/${PROJECT_NAME}
 )
 
