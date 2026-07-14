@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 project(mavros)
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/ros2_helpers.cmake)
+
 # Default to C++20
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
@@ -102,7 +104,7 @@ add_library(mavros SHARED
   src/lib/uas_timesync.cpp
   # [[[end]]] (checksum: 3239d16fc87982964694f18425f297b1)
 )
-ament_target_dependencies(mavros
+ros2_target_dependencies(mavros
   rclcpp
   rclcpp_components
   rcpputils
@@ -160,7 +162,7 @@ target_link_libraries(mavros_plugins
   mavros
   sjson
 )
-ament_target_dependencies(mavros_plugins
+ros2_target_dependencies(mavros_plugins
   angles
   geometry_msgs
   geographic_msgs
@@ -247,23 +249,23 @@ if(BUILD_TESTING)
 
   ament_add_gtest(libmavros-frame-conversions-test test/test_frame_conversions.cpp)
   target_link_libraries(libmavros-frame-conversions-test mavros)
-  #ament_target_dependencies(libmavros-frame-conversions-test mavros)
+  #ros2_target_dependencies(libmavros-frame-conversions-test mavros)
 
   ament_add_gtest(libmavros-sensor-orientation-test test/test_sensor_orientation.cpp)
   target_link_libraries(libmavros-sensor-orientation-test mavros)
-  #ament_target_dependencies(libmavros-sensor-orientation-test mavros)
+  #ros2_target_dependencies(libmavros-sensor-orientation-test mavros)
 
   ament_add_gtest(libmavros-quaternion-utils-test test/test_quaternion_utils.cpp)
   target_link_libraries(libmavros-quaternion-utils-test mavros)
-  #ament_target_dependencies(libmavros-quaternion-utils-test mavros)
+  #ros2_target_dependencies(libmavros-quaternion-utils-test mavros)
 
   ament_add_gmock(mavros-router-test test/test_router.cpp)
   target_link_libraries(mavros-router-test mavros)
-  ament_target_dependencies(mavros-router-test mavros_msgs)
+  ros2_target_dependencies(mavros-router-test mavros_msgs)
 
   ament_add_gmock(mavros-uas-test test/test_uas.cpp)
   target_link_libraries(mavros-uas-test mavros)
-  ament_target_dependencies(mavros-uas-test mavros_msgs)
+  ros2_target_dependencies(mavros-uas-test mavros_msgs)
 
   ament_add_pytest_test(mavros_py_test test/mavros_py
     PYTHON_EXECUTABLE "${PYTHON_EXECUTABLE}"

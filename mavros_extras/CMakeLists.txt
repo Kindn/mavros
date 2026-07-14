@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 project(mavros_extras)
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/ros2_helpers.cmake)
+
 # Default to C++20
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
@@ -124,7 +126,7 @@ add_library(mavros_extras_plugins SHARED
   src/plugins/wheel_odometry.cpp
   # [[[end]]] (checksum: a6dc36e6871deb96f56d61e2a1a38f37)
 )
-ament_target_dependencies(mavros_extras_plugins
+ros2_target_dependencies(mavros_extras_plugins
   angles
   geometry_msgs
   geographic_msgs
@@ -156,7 +158,7 @@ add_library(mavros_extras SHARED
   src/lib/servo_state_publisher.cpp
   # [[[end]]] (checksum: a3ce43c71c567f697861bcbcd0f25aa3)
 )
-ament_target_dependencies(mavros_extras
+ros2_target_dependencies(mavros_extras
   rclcpp
   rclcpp_components
   std_msgs

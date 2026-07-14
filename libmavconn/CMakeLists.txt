@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.5)
 project(libmavconn)
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/ros2_helpers.cmake)
+
 # Default to C11
 if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 11)
@@ -50,7 +52,7 @@ add_library(mavconn SHARED
   src/tcp.cpp
   src/udp.cpp
 )
-ament_target_dependencies(mavconn
+ros2_target_dependencies(mavconn
   "console_bridge"
 )
 
@@ -101,7 +103,7 @@ if(BUILD_TESTING)
 
   ament_add_gtest(test_mavconn test/test_mavconn.cpp)
   target_link_libraries(test_mavconn mavconn)
-  ament_target_dependencies(test_mavconn
+  ros2_target_dependencies(test_mavconn
     "console_bridge"
   )
 endif()
